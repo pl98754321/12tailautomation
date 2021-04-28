@@ -19,7 +19,7 @@ def screen_check(name,percent = 0.9):
             print("---- " + name + " complete----")
             break
 
-#-----------------------------------------------------------------------
+#-------------------------------905----------------------------
 
 def skipshadowboss():
     screen_check("shadowgod")
@@ -27,8 +27,7 @@ def skipshadowboss():
     while pg.locateOnScreen(path + r"shadowgod.PNG", confidence=0.9) != None:
         pg.click(847,321)
 
-
-def run905():
+def run905mol():
     useskill("autogyrogun","1")
     click("e",distance=2)
     click(Key.tab)
@@ -44,19 +43,31 @@ def run905():
     click(Key.tab)
     click("3")
     click(Key.tab)
-    
+
+def run905chm():
+    screen_check("bloodbrun")
+    click("z",distance=0.3)
+    click("s",distance=4)
+    click("1")
+    time.sleep(0.75)
+    click("2")
+    time.sleep(4)
+    #screen_check("bloodbrun")
+    #click("1")
+    #time.sleep(0.75)
+    click("3")
 
 def gocamp():
     screen_check('postbutton')
     screen_check('MissionCamp')
     pg.click(890,484)
 
-def runwhilemine(mission):
-    screen_check("autogyrogun")
+def runwhilemine(mission,skillcheck = "autogyrogun",y=330):
+    screen_check(skillcheck)
     click("q",distance=2)
     click("w",distance=0.5)
-    for i in [800,880,950,1000]:
-        pg.click(i,330)
+    for i in [800,880,950,1000,1080]:
+        pg.click(i,y)
     screen_check(mission)
     if mission == "905800600":
         screen_check("createdes800600")
@@ -67,11 +78,11 @@ def runwhilemine(mission):
     screen_check("start800600")
     pg.click(1216,415) #click start
 
-#---------------------------------------------
+#-------------------------------703-------------------------------
 
-def runwhiledes(mission):
+def runwhiledes(mission,skillcheck = "autogyrogun"):
     screen_check("FirsttailDes")
-    screen_check("Fatalstike")
+    screen_check(skillcheck)
     click("q",distance=3)
     click("w",distance=1)
     for i in [1064,1000]:
@@ -91,7 +102,7 @@ def checkready():
     time.sleep(1)
     pg.click(1212,7411) #click create
 
-#----------------------------------------------------------------------------------
+#---------------------------------904-------------------------------------------------
 
 def run904():
     screen_check("autogyrogun")
@@ -102,9 +113,11 @@ def run904():
     useskill("autogyrogun","1")
     click("w",distance=1.5)
 
+#----------------------------------------------------------------------------
 keyboard = Controller()
 while True:
     skipshadowboss()
-    run905()
-    #runwhilemine("905800600")
+    run905chm()
+    gocamp()
+    runwhilemine("905800600",skillcheck="bloodbrun",y=384)
 
