@@ -1,6 +1,11 @@
 from pynput.keyboard import Key, Controller
 import pyautogui as pg
 import time
+
+def filelocate(name):
+    path = r"C:\Users\plem67\Desktop\New folder (2)\automation\\"
+    return path + name + r".png"
+
 def click(typekey,distance = 0.1):
     keyboard.press(typekey)
     time.sleep(distance)
@@ -14,8 +19,7 @@ def useskill(skillname,skillnum,wait=True):
 
 def screen_check(name,percent = 0.9):
     while True:
-        path = r"C:\Users\plem67\Desktop\New folder (2)\automation\\"
-        if pg.locateOnScreen(path + name + r".PNG", confidence=percent) != None:
+        if pg.locateOnScreen(filelocate(name), confidence=percent) != None:
             print("---- " + name + " complete----")
             break
 
@@ -23,8 +27,7 @@ def screen_check(name,percent = 0.9):
 
 def skipshadowboss():
     screen_check("shadowgod")
-    path = r"C:\Users\plem67\Desktop\New folder (2)\automation\\"
-    while pg.locateOnScreen(path + r"shadowgod.PNG", confidence=0.9) != None:
+    while pg.locateOnScreen(filelocate("shadowgod"), confidence=0.9) != None:
         pg.click(847,321)
 
 def run905mol():
@@ -78,7 +81,7 @@ def runwhilemine(mission,skillcheck = "autogyrogun",y=330):
     screen_check("start800600")
     pg.click(1216,415) #click start
 
-#-------------------------------703-------------------------------
+#--------------------------------------------------------------------
 
 def runwhiledes(mission,skillcheck = "autogyrogun"):
     screen_check("FirsttailDes")
@@ -91,13 +94,8 @@ def runwhiledes(mission,skillcheck = "autogyrogun"):
     screen_check("create800600")
     pg.click(1212,411) #click create
 
-def run703():
-    screen_check("Fatalstike")
-    pg.hotkey("alt","x")
-
 def checkready():
-    path = r"C:\Users\plem67\Desktop\New folder (2)\automation\\"
-    while pg.locateOnScreen(path + r"kkk.PNG", confidence=0.6) == None: #คนพิมพ์ kkk
+    while pg.locateOnScreen(filelocate("kkk"), confidence=0.6) == None: #คนพิมพ์ kkk
         print("donthave")
     time.sleep(1)
     pg.click(1212,7411) #click create
@@ -120,4 +118,3 @@ while True:
     run905chm()
     gocamp()
     runwhilemine("905800600",skillcheck="bloodbrun",y=384)
-
