@@ -18,6 +18,7 @@ def screen_check(name,percent = 0.9):
         if pg.locateOnScreen(path + name + r".PNG", confidence=percent) != None:
             print("---- " + name + " complete----")
             break
+
 def runwhilmapmine(map):
     screen_check("autogyrogun")
     click("q",distance=2)
