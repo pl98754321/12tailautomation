@@ -1,3 +1,5 @@
+from functools import cmp_to_key
+from sys import flags
 from pynput.keyboard import Key, Controller
 import pyautogui as pg
 import time
@@ -11,17 +13,28 @@ def click(typekey,distance = 0.1):
     time.sleep(distance)
     keyboard.release(typekey)
 
-def useskill(skillname,skillnum,wait=True):
+def useskill(skillname,skillnum,wait=True,contime=2):
     screen_check(skillname)
     click(skillnum)
     if wait:
-        time.sleep(3.5)
+        time.sleep(contime)
 
 def screen_check(name,percent = 0.9):
     while True:
         if pg.locateOnScreen(filelocate(name), confidence=percent) != None:
             print("---- " + name + " complete----")
             break
+
+def gotomission(mission):
+    screen_check(mission)
+    if mission == "905":
+        screen_check("createdes800600")
+        pg.click(1281,412) #ปุ่มสร้างแตกต่าง
+    else :
+        screen_check("create800600")
+        pg.click(1216,415) #click create
+    screen_check("start800600")
+    pg.click(1216,415) #click start
 
 #-------------------------------905----------------------------
 
@@ -60,45 +73,33 @@ def run905chm():
     #time.sleep(0.75)
     click("3")
 
-def gocamp():
-    screen_check('postbutton')
-    screen_check('MissionCamp')
-    pg.click(890,484)
 
+#--------------------------------------------------------------------
 def runwhilemine(mission,skillcheck = "autogyrogun",y=330):
     screen_check(skillcheck)
     click("q",distance=2)
     click("w",distance=0.5)
     for i in [800,880,950,1000,1080]:
         pg.click(i,y)
-    screen_check(mission)
-    if mission == "905800600":
-        screen_check("createdes800600")
-        pg.click(1281,412) #ปุ่มสร้างแตกต่าง
-    else:
-        screen_check("create800600")
-        pg.click(1216,415) #click create
-    screen_check("start800600")
-    pg.click(1216,415) #click start
-
-#--------------------------------------------------------------------
+    gotomission(mission)
 
 def runwhiledes(mission,skillcheck = "autogyrogun"):
-    screen_check("FirsttailDes")
     screen_check(skillcheck)
-    click("q",distance=3)
-    click("w",distance=1)
-    for i in [1064,1000]:
-        pg.click(i,382)
-    screen_check(mission)
-    screen_check("create800600")
-    pg.click(1212,411) #click create
-
-def checkready():
-    while pg.locateOnScreen(filelocate("kkk"), confidence=0.6) == None: #คนพิมพ์ kkk
-        print("donthave")
     time.sleep(1)
-    pg.click(1212,7411) #click create
+    click("q",distance=1.44)
+    click("w",distance=0.42)
+    for i in [825,855,873,903,933,963,993,1023,1053,1083]:
+        pg.click(i,329)
+    gotomission(mission)
+
+def runwhileguild(mission,skillcheck = "autogyrogun"):
+    screen_check("Firsttailguild")
+    screen_check(skillcheck)
+    click("s",distance=1.5)
+    click("q",distance=1)
+    time.sleep(1)
+    pg.click(774,341)
+    gotomission(mission)
 
 #---------------------------------904-------------------------------------------------
 
@@ -111,10 +112,68 @@ def run904():
     useskill("autogyrogun","1")
     click("w",distance=1.5)
 
+def run604():
+    useskill("autogyrogun","1")
+    click("q",distance=1.7)
+    click("w",distance=0.85)
+    useskill("buildbot","9",contime=4)
+    useskill("autogyrogun","1")
+    click("e",distance=3.4)
+    useskill("autogyrogun","1")
+    click(Key.shift)
+    useskill("subrab","0",wait=False)
+    useskill("syncomole","6",wait=False)
+    useskill("reload","7",wait=False)
+    click("w",distance=2)
+    useskill("autogyrogun","1")
+    click("q",distance=3)
+    click("w")
+    useskill("autogyrogun","1")
+    useskill("syncomole","6",wait=False)
+    click("q",distance=1)
+
+#----------------------------------------------------------------------------
+def pausewhiledrop(name):
+    click(Key.f4)
+    time.sleep(1)
+    pg.moveTo(1280,107)
+    pg.click(1280,107)
+    pg.click(1280,107)
+    while pg.locateOnScreen(filelocate("postbutton"),confidence=0.9) == None:
+        if pg.locateOnScreen(filelocate(name),confidence=0.7) != None:
+            print("have " + name)
+            while True:
+                print("!!!!!!!!!!!!!!!!!!!! colllect " + name)
+                time.sleep(5)
+    print("!!!donthave " + name)
+
+def collectrewarditem():
+    screen_check("postbutton")
+    for i in [740,770,800,830,860,890,920]:
+        pg.click(i,340)
+        time.sleep(1)
+
+def takescreenshot():
+    path = r"C:\Users\plem67\Desktop\New folder (2)\screenshot\\"
+    savetime = time.localtime()
+    screen_check("postbutton")
+    screen_check('MissionCamp')
+    screenshot_raw = pg.screenshot()
+    screenshot_raw.save(path + "604" + str(savetime.tm_mday) + str(savetime.tm_hour) + str(savetime.tm_min) + str(savetime.tm_sec) +r".PNG")
+    print("##### take screenshot " + time.ctime() + " #########")
+
+def gocamp():
+    screen_check('postbutton')
+    screen_check('MissionCamp')
+    time.sleep(1)
+    pg.click(890,484)
 #----------------------------------------------------------------------------
 keyboard = Controller()
+#pausewhiledrop("test")
+#print("dada")
 while True:
-    skipshadowboss()
-    run905chm()
+    run604()
+    pausewhiledrop("cannon")
+    takescreenshot()
     gocamp()
-    runwhilemine("905800600",skillcheck="bloodbrun",y=384)
+    runwhiledes("604")

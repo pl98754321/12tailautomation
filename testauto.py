@@ -1,6 +1,11 @@
+from pynput import keyboard
 from pynput.keyboard import Key, Controller
 import pyautogui as pg
 import time
+def filelocate(name):
+    path = r"C:\Users\plem67\Desktop\New folder (2)\automation\\"
+    return path + name + r".png"
+
 def click(typekey,distance = 0.1):
     keyboard.press(typekey)
     time.sleep(distance)
@@ -14,12 +19,11 @@ def useskill(skillname,skillnum,wait=True):
 
 def screen_check(name,percent = 0.9):
     while True:
-        path = r"C:\Users\plem67\Desktop\New folder (2)\automation\\"
-        if pg.locateOnScreen(path + name + r".PNG", confidence=percent) != None:
+        if pg.locateOnScreen(filelocate(name), confidence=percent) != None:
             print("---- " + name + " complete----")
             break
 
-def runwhilmapmine(map):
+def gotomission(mission):
     screen_check("autogyrogun")
     click("q",distance=2)
     click("w",distance=0.5)
@@ -31,10 +35,21 @@ def runwhilmapmine(map):
     screen_check("start800600")
     pg.click(1216,415) #click start
 
-keyboard = Controller()
-pg.mouseDown(button='right')
-time.sleep(1)
-pg.drag(30, 0, 2, button='right')
-time.sleep(1)
-pg.mouseUp(button="right")
-#
+def pausewhiledrop(name):
+    click(Key.f4)
+    time.sleep(1)
+    pg.click(1280,115)
+    while pg.locateOnScreen(filelocate("postbutton"),confidence=0.9) == None:
+        if pg.locateOnScreen(filelocate(name),confidence=0.7) != None:
+            print("have " + name)
+            while True:
+                print("!!!!!!!!!!!!!!!!!!!! colllect " + name)
+                time.sleep(5)
+    print("!!!donthave " + name)
+
+time.sleep(0.1)
+keyboard=Controller()
+path = r"C:\Users\plem67\Desktop\New folder (2)\screenshot\\"
+savetime = time.localtime()
+screenshot_raw = pg.screenshot(region=(569,24,800,600))
+screenshot_raw.save(path + "604" + str(savetime.tm_mday) + str(savetime.tm_hour) + str(savetime.tm_min) + str(savetime.tm_sec) +r".PNG")
