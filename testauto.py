@@ -2,6 +2,7 @@ from pynput import keyboard
 from pynput.keyboard import Key, Controller
 import pyautogui as pg
 import time
+from PIL import Image,ImageDraw,ImageFont
 def filelocate(name):
     path = r"C:\Users\plem67\Desktop\New folder (2)\automation\\"
     return path + name + r".png"
@@ -47,9 +48,26 @@ def pausewhiledrop(name):
                 time.sleep(5)
     print("!!!donthave " + name)
 
-time.sleep(0.1)
+def takescreenshot(name):
+    path = r"C:\Users\plem67\Desktop\New folder (2)\screenshot\\"
+    savetime = time.localtime()
+    subfixname = "_" + str(savetime.tm_mday) + "_" + str(savetime.tm_hour) + "-" + str(savetime.tm_min)
+    screen_check("postbutton")
+    screen_check('MissionCamp')
+    screenshotraw_raw = pg.screenshot()
+    screenshotraw_raw.save(path + r"raw\\" + name + subfixname +r".PNG")
+    screenshot_raw = pg.screenshot(region=(569,24,800,600))
+    screenshot_raw.save(path + name + subfixname +r".PNG")
+    print("##### take screenshot " + time.ctime() + " #########")
+
+def collectrewarditem():
+    screen_check("postbutton")
+    for i in [740,770,800,830,860,890,920]:
+        pg.click(i,350)
+        time.sleep(1)
+
+time.sleep(1)
 keyboard=Controller()
-path = r"C:\Users\plem67\Desktop\New folder (2)\screenshot\\"
-savetime = time.localtime()
-screenshot_raw = pg.screenshot(region=(569,24,800,600))
-screenshot_raw.save(path + "604" + str(savetime.tm_mday) + str(savetime.tm_hour) + str(savetime.tm_min) + str(savetime.tm_sec) +r".PNG")
+click("s",distance=1.5)
+click("q",distance=1.5)
+time.sleep(1)
