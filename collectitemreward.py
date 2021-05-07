@@ -20,4 +20,4 @@ def collecrewarditemByImg(name):
         pg.click(x, y)
         time.sleep(0.9)
 
-collecrewarditemByImg
+collecrewarditemByImg() #<-------- ใส่ชื่อไฟล์ในนี้
