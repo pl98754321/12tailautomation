@@ -40,10 +40,10 @@ def gotomission(mission,wait_gomission=False):
 
 #-------------------------------905----------------------------
 
-def skipshadowboss():
-    screen_check("shadowgod")
+def skip(name = "shadowgod"):
+    screen_check(name)
     print("###### skipshadowboss process ######")
-    while pg.locateOnScreen(filelocate("shadowgod"), confidence=0.9) != None:
+    while pg.locateOnScreen(filelocate(name), confidence=0.9) != None:
         pg.click(847,321)
 
 #--------------------------------------------------------------------
@@ -193,9 +193,12 @@ def run602():
     useskill("subrab","0",wait=False)
     useskill("syncomole","6",wait=False)
     #---------------6-------------------
-    screen_check("keygo")
+    skip("bodas")
+    time.sleep(2.5)
     click("w",distance=0.5)
     click("e",distance=4.5)
+    click("s",distance=1)
+    time.sleep(17.5)
     click("s",distance=5)
     #------------go to final-------------
 
@@ -280,13 +283,13 @@ def allin604():
     runwhilecamp("604")
 
 def allin905smol():
-    skipshadowboss()
+    skip()
     run905mol()
     gocamp()
     runwhilecamp("905")
 
 def allin905chm():
-    skipshadowboss()
+    skip()
     run905chm()
     collecrewarditemByImg("shadowbow")
     collecrewarditemByImg("shadowpowder")
@@ -302,8 +305,9 @@ def allin403():
 def allin602():
     run602()
     collecrewarditemByImg("copperore")
+    collecrewarditemByImg("ironpowder")
     gocamp()
-    runwhilecamp("602",wait_runwhile=True)
+    runwhilecamp("602")
 
 def allin703():
     screen_check("gilshot")
@@ -317,4 +321,4 @@ def allin703():
 keyboard = Controller()
 time.sleep(0.5)
 while True:
-    allin604()
+    allin602()
